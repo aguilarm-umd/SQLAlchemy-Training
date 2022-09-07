@@ -1,6 +1,5 @@
 #! /usr/bin/env python3
 
-from queue import Empty
 import sys, pdb
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
 from sqlalchemy import create_engine, select
