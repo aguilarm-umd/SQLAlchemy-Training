@@ -8,7 +8,7 @@ inp = input("Postgress (1) or SQLite (2)?\n")
 engine = None
 if inp == '1':
     # Currently set up to use my ip address. The postgres server is ported to 5432
-    conn_url = 'postgresql+psycopg2://postgres:password@10.204.153.107:5432/testdb'
+    conn_url = 'postgresql+psycopg2://postgres:password@localhost:5432/testdb'
     engine = create_engine(conn_url)
 
 elif inp == '2':
