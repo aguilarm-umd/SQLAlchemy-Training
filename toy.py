@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python
 
 import sys, pdb
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
@@ -32,7 +32,8 @@ conn = engine.connect()
 
 # Right now I will try to fetch:
 # The sqlite version is created from memory so it wont have anything
-# The first time the postgres version 
+# The first time the postgres version won't have anything, but if this
+# file is ran more than once, the query will not be empty
 users_set = conn.execute(select([users])).fetchall()
 books_set = conn.execute(select([books])).fetchall()
 print(users_set)

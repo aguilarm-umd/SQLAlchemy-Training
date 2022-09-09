@@ -1,27 +1,31 @@
 The sqlite database is in-memory which made things easy, but the postgres database could not be done in-memory. I decided to then setup a postgres database using Docker.
 
-**A few prerequisites:**
-*After installing postgres, create a super user named postgres:*
-> createuser -s postgres
+**A few prerequisites after cloning:**
+*Install the Postgres App from here: https://postgresapp.com/*
+* Don't Initialize a new server
+* Also run this command:
+> sudo mkdir -p /etc/paths.d &&
+echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp
 
-*~~Also note your ip address to change the ip address in conn_url in the toy.py file.~~*
-* ~~When I was trying to connect to the database I thought it would work with localhost, but I had to use my ip address instead.~~
+*Install pyenv*
+> brew install pyenv
 
-**The steps are as follows in a terminal (I use zsh if that has any effect):**
+*In the repo create a python 3.7.13 virtual environment*
+> pyenv virtualenv 3.7.13 SQLAlchemy-Training
 
-> docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=password postgres
+*Install the dependencies for the project in the repo (In ZSH I had to put single quotes)*
+> pip install -e '.[dev]'
 
-> docker exec -it postgres-test bash
+**The steps are as follows:**
 
-> psql -U postgres
+> docker build -t test-image ./
 
-> CREATE DATABASE testdb;
+> docker run -d -p 5432:5432 --name postgres-test test-image
 
-~~Now in the toy.py file change conn_url so that instead of 10.204.153.107 it's your ip address.~~
+> ./toy.py
 
 **Summary of Steps**
 
-* Created a docker container named postgres-test with password "password" that was ported to 5432
-* Went into container
-* Logged in as user "postgres" and created a database named "testdb"
-* ~~Changed the ip address in toy.py to match user's address~~
+* Built Docker image for the Postgres Server using the Dockerfile in the repo
+* Created a container for the image that is ported to localhost:5432
+* Ran the toy.py file as an executable.
