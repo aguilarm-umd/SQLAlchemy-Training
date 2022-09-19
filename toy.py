@@ -40,13 +40,13 @@ books = Table('books', meta,
 meta.create_all(engine)
 conn = engine.connect()
 
-# First Query
+# First Query to get rows from both tables
 users_set = conn.execute(select([users])).fetchall()
 books_set = conn.execute(select([books])).fetchall()
 print(users_set)
 print(books_set)
 
-# Populate Database
+# Populate tables if they haven't been populated yet
 if not users_set:
     conn.execute(users.insert(),
                 [
@@ -67,7 +67,7 @@ if not books_set:
                 ]
     )
 
-# Second Query
+# Second Query to get rows from both tables
 users_set = conn.execute(select([users])).fetchall()
 books_set = conn.execute(select([books])).fetchall()
 print(users_set)
