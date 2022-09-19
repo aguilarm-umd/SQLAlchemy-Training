@@ -29,7 +29,9 @@ Install the dependencies for the project in the repo (In ZSH I had to put single
 ## Building and Running
 
 > docker build -t test-image ./
+
 > docker run -d -p 5432:5432 --name postgres-test test-image
+
 > ./toy.py
 
 ## Summary of Steps
