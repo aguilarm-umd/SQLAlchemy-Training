@@ -4,10 +4,19 @@ import sys, pdb
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
 from sqlalchemy import create_engine, select
 
+# Description:
+# This is a toy application for learning SQLAlchemy.
+# This application does five things:
+# - Connect to either a Postgres or SQLite Database
+# - Sets up the database
+# - Queries the database
+# - Populates the database
+# - Queries again
+
+# Gather User Input
 inp = input("Postgress (1) or SQLite (2)?\n")
 engine = None
 if inp == '1':
-    # Currently set up to use my ip address. The postgres server is ported to 5432
     conn_url = 'postgresql+psycopg2://postgres:password@localhost:5432/testdb'
     engine = create_engine(conn_url)
 
@@ -16,6 +25,7 @@ elif inp == '2':
 else:
     sys.exit("Bad Input: Either \'1\' or \'2\'")
 
+# Setup Database
 meta = MetaData()
 users = Table('users', meta,
             Column('user_id', Integer, primary_key=True),
@@ -30,16 +40,13 @@ books = Table('books', meta,
 meta.create_all(engine)
 conn = engine.connect()
 
-# Right now I will try to fetch:
-# The sqlite version is created from memory so it wont have anything
-# The first time the postgres version won't have anything, but if this
-# file is ran more than once, the query will not be empty
+# First Query
 users_set = conn.execute(select([users])).fetchall()
 books_set = conn.execute(select([books])).fetchall()
 print(users_set)
 print(books_set)
 
-# I will now populate the databases
+# Populate Database
 if not users_set:
     conn.execute(users.insert(),
                 [
@@ -60,7 +67,7 @@ if not books_set:
                 ]
     )
 
-# Now if I retrieve the tables there will definitely be entries
+# Second Query
 users_set = conn.execute(select([users])).fetchall()
 books_set = conn.execute(select([books])).fetchall()
 print(users_set)
