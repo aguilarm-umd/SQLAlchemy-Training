@@ -9,6 +9,7 @@ Install the Postgres App from here: <https://postgresapp.com/>
 * psycopg2 has dependencies on some Postgres libraries.
 
 Don't Initialize a new server
+
 Also run this command:
 
 > sudo mkdir -p /etc/paths.d &&
